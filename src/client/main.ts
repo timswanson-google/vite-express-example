@@ -8,7 +8,7 @@ interface ColorResponse {
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <h1>Vite+Express Prototype</h1>
+    <h1>Vite+Express Demo</h1>
     <div id="color-box"></div>
     <button id="color-button" type="button">Change Color</button>
       <form class="radio-group">
@@ -22,8 +22,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
 const button = document.querySelector<HTMLButtonElement>("#color-button")!;
 const box = document.querySelector<HTMLButtonElement>("#color-box")!;
-setColor();
 
+setColor();
 button.addEventListener("click", setColor);
 
 async function setColor() {
