@@ -1,24 +1,46 @@
 import "./style.css";
 
-import { setupCounter } from "./counter";
-import typescriptLogo from "./typescript.svg";
+interface ColorResponse {
+  red: number;
+  green: number;
+  blue: number;
+}
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
+    <h1>Vite+Express Prototype</h1>
+    <div id="color-box"></div>
+    <button id="color-button" type="button">Change Color</button>
+      <form class="radio-group">
+        <label><input type="radio" name="colorVariant" value="" checked>Random</label>
+        <label><input type="radio" name="colorVariant" value="red">Red</label>
+        <label><input type="radio" name="colorVariant" value="blue">Blue</label>
+        <label><input type="radio" name="colorVariant" value="green">Green</label>
+        <label><input type="radio" name="colorVariant" value="gray">Gray</label>
+    </form>
 `;
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+const button = document.querySelector<HTMLButtonElement>("#color-button")!;
+const box = document.querySelector<HTMLButtonElement>("#color-box")!;
+setColor();
+
+button.addEventListener("click", setColor);
+
+async function setColor() {
+  const selectedRadioButton = document.querySelector(
+    'input[name="colorVariant"]:checked',
+  ) as HTMLInputElement;
+  const variant = selectedRadioButton.value;
+  box.style.backgroundColor = await getRandomColor(variant);
+}
+
+async function getRandomColor(variant: string) {
+  const url = new URL("/color", window.location.origin);
+  if (variant) {
+    url.searchParams.append("variant", variant);
+  }
+
+  const response = await fetch(url);
+  const { red, green, blue } = (await response.json()) as ColorResponse;
+  return `rgb(${red}, ${green}, ${blue})`;
+}
