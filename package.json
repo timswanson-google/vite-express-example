@@ -1,5 +1,5 @@
 {
-  "name": "v-e",
+  "name": "vite-express-example",
   "private": true,
   "version": "0.0.0",
   "scripts": {
