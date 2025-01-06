@@ -20,5 +20,5 @@ The project containerized with Docker. To run the docker container:
 
 ```sh
 docker build .
-docker run -P <container-id>
+docker run -p 3000:3000 <container-id>
 ```
