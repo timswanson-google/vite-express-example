@@ -1,9 +1,13 @@
 FROM node:lts
+WORKDIR /vite-express-example
+
+RUN npm install -g tsx
 
 COPY . .
 
-RUN npm install
+RUN npm clean-install
 RUN npm run build
 
-EXPOSE 3000
-CMD npm run start
+ENV NODE_ENV="production"
+
+CMD ["tsx", "src/server/main.ts"]
