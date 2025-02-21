@@ -5,7 +5,14 @@
   "scripts": {
     "dev": "nodemon -w src/server -x tsx src/server/main.ts",
     "start": "NODE_ENV=production tsx src/server/main.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "docker-build": "docker build --tag=vite-express-example .",
+    "docker-clean": "docker image rm vite-express-example",
+    "docker-logs": "docker logs vite-express-example",
+    "docker-rm": "docker rm vite-express-example",
+    "docker-run": "docker run --name=vite-express-example --publish=3000:3000 --detach --rm vite-express-example",
+    "docker-run:no-rm": "docker run --name=vite-express-example --publish=3000:3000 --detach vite-express-example",
+    "docker-stop": "docker stop vite-express-example"
   },
   "devDependencies": {
     "@types/express": "^4.17.15",
