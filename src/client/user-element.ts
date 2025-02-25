@@ -26,10 +26,22 @@ export class UserElement extends LitElement {
   }
 
   async signIn() {
-    return firebaseAuth.signInWithPopup(this.auth, this.#authProvider);
+    const userCredential = await firebaseAuth.signInWithPopup(
+      this.auth,
+      this.#authProvider,
+    );
+    const idToken = await userCredential.user.getIdToken();
+    await fetch("/credential", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+
+    return userCredential;
   }
 
   async signOut() {
-    return firebaseAuth.signOut(this.auth);
+    await fetch("/credential", { method: "DELETE" });
+    await firebaseAuth.signOut(this.auth);
   }
 }

@@ -1,5 +1,6 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { when } from "lit/directives/when.js";
 
 import * as firebase from "firebase/app";
 import * as firebaseAuth from "firebase/auth";
@@ -37,7 +38,7 @@ export class MainElement extends LitElement {
         .auth=${this.#firebaseAuth}
         .user=${this.user}
       ></user-element>
-      <color-picker></color-picker>
+      ${when(this.user, () => html`<color-picker></color-picker>`)}
     `;
   }
 }
